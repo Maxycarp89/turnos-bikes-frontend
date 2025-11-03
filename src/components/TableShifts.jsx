@@ -89,7 +89,7 @@ function TableShifts() {
       ) : (
         <div className="bg-white shadow rounded p-4">
           <div className="mb-4">
-            <button className="w-full bg-blue-600 text-white px-4 py-2 rounded" onClick={generateCalendar}>
+            <button className="w-full bg-blue-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-blue-700" onClick={generateCalendar}>
               {shifts[0].DocEntry ? "Editar Calendario" : "Cargar Calendario"}
             </button>
           </div>

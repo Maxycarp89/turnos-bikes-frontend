@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import {
   Routes,
   Route,
@@ -10,6 +10,7 @@ import { useCookies } from "react-cookie";
 import SearchShift from "../components/SearchShift.jsx";
 import TableShifts from "../components/TableShifts.jsx";
 import Metrics from "../components/Metrics.jsx";
+import { clientAxios } from "../utils/clientAxios";
 
 const PanelTurnos = () => {
   return (
@@ -25,7 +26,7 @@ const AdminTurnos = () => {
     <div className="p-4">
       <h2 className="text-xl font-semibold mb-4">Administrar Turnos</h2>
       <p className="mb-4 text-sm text-gray-600">
-        Gestiona la cantidad de turnos por horario.
+        Desde acá podes gestionar la cantidad de turnos por horario.
       </p>
       <SearchShift />
       <TableShifts />
@@ -35,7 +36,7 @@ const AdminTurnos = () => {
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [cookies, , removeCookie] = useCookies();
+  const [cookies, setCookie, removeCookie] = useCookies();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -46,6 +47,22 @@ const Dashboard = () => {
     });
     navigate("/login");
   };
+
+  useEffect(() => { (async () => await relogin())() }, []);
+
+  const relogin = async () => {
+      try {
+          const { data } = await clientAxios.post("/loginAgain", { UserName: cookies.user })
+          for (const cookie of data['set-cookie']) {
+              const cookieName = cookie.split("=")[0].replace(' ', '');
+              const cookieValue = cookie.split("=")[1].split(";")[0];
+              setCookie(cookieName, cookieValue, { path: "" });
+          }
+      } catch (error) {
+       console.error(error);
+      }
+  }
+
 
   return (
     <div className="flex h-screen bg-gray-100">
