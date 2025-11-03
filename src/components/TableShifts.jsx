@@ -7,7 +7,7 @@ function TableShifts() {
   const shifts = useStore((s) => s.shifts);
   const manageShiftBody = useStore((s) => s.manageShiftBody);
 
-  const [ setCookie] = useCookies();
+  const [, setCookie] = useCookies();
 
   const handleChange = (event, date, hour) => {
     const maped = shifts.map((day) => {
@@ -82,7 +82,11 @@ function TableShifts() {
 
   return (
     <>
-      {shifts && shifts.length > 0 && (
+      {!Array.isArray(shifts) || shifts.length === 0 ? (
+        <div className="text-center py-8 text-gray-500">
+          {!Array.isArray(!shifts) ? "Seleccione un mes y año para ver los turnos" : "No hay turnos disponibles para el período seleccionado"}
+        </div>
+      ) : (
         <div className="bg-white shadow rounded p-4">
           <div className="mb-4">
             <button className="w-full bg-blue-600 text-white px-4 py-2 rounded" onClick={generateCalendar}>

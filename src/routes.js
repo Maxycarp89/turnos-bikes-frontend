@@ -4,18 +4,11 @@ import Landing from './pages/Landing';
 
 const coreRoutes = [
     {
-        path: '/turnos/',
-        title: 'Panel de Turnos',
+        path: '/turnos/*',
+        title: 'Turnos',
         component: Dashboard,
         roles: ['Postventa'],
         positions: ['Cajero', 'Vendedor', 'Referente', 'IT']
-    },
-    {
-        path: '/turnos/admin',
-        title: 'Administración de Turnos',
-        component: Dashboard,
-        roles: ['Postventa'],
-        positions: ['Referente', 'IT']
     },{
         path: '/',
         title: 'Landing Page',

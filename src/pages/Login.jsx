@@ -15,8 +15,10 @@ function Login() {
     setLogin({ ...login, [event.target.name]: event.target.value });
 
   const setSessionOffices = (offices) => {
-    sessionStorage.setItem("offices", JSON.stringify(offices));
-    setOffices(offices);
+    const allowedBPLIds = [68, 81, 128];
+    const filteredOffices = offices.filter(office => allowedBPLIds.includes(office.BPLId));
+    sessionStorage.setItem("offices", JSON.stringify(filteredOffices));
+    setOffices(filteredOffices);
   };
 
   const getSessionOffices = () => {
@@ -103,7 +105,6 @@ function Login() {
     setCookie("officeSelected", office[0]);
     setCookie("poi", data);
     setCookie("isLoggedIn", true);
-    setCookie("active", "Metricas");
   };
 
   const poiWithToast = async (event) => {

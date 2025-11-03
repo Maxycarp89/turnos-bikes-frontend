@@ -45,7 +45,13 @@ function App() {
               path="*"
               element={
                 <Navigate
-                  to={isLoggedIn ? (accessibleRoutes.length > 0 ? accessibleRoutes[0].path : '/login') : '/'}
+                  to={
+                    isLoggedIn
+                      ? (accessibleRoutes.length > 0
+                          ? accessibleRoutes[0].path.replace('/*', '')
+                          : '/login')
+                      : '/'
+                  }
                   replace
                 />
               }
