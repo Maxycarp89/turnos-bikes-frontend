@@ -34,6 +34,38 @@ const Metrics = () => {
     return `${d}/${m}/${y}`;
   }
 
+  // Mapear códigos numéricos de U_problemTyp/U_ProSubType a etiquetas legibles
+  const getProblemLabel = (typ, subtype) => {
+    // si ya viene como texto, devolver tal cual
+    if (!typ && !subtype) return "(sin motivo)";
+    if (typeof typ === "string" && isNaN(Number(typ))) return typ;
+
+    const t = Number(typ);
+    const s = subtype !== undefined && subtype !== null ? Number(subtype) : null;
+
+    const mapByPair = {
+      "39|131": "Service Completo",
+      "39|99": "Alineación de ruedas",
+      "39|104": "Frenos y cambio",
+      "41|94": "Suspensión",
+      "39|132": "Instalación de accesorios",
+      "41|95": "Personalizado",
+    };
+
+    if (s) {
+      const pairKey = `${t}|${s}`;
+      if (mapByPair[pairKey]) return mapByPair[pairKey];
+    }
+
+    // Mapeo por tipo en caso no tengamos subtype
+    const mapByType = {
+      39: "Mantenimiento / Servicio",
+      41: "Soporte técnico",
+    };
+
+    return mapByType[t] || String(typ);
+  };
+
   const searchShifts = async () => {
     if (!month) return toast.error("Ingresar el mes.");
     if (!year) return toast.error("Ingresar el año.");
@@ -211,15 +243,7 @@ const Metrics = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <label className="flex items-center gap-2">
-          <input
-            id="input-check"
-            type="checkbox"
-            checked={filterToday}
-            onChange={(e) => setFilterToday(e.target.checked)}
-          />
-          <span>Turnos de Hoy</span>
-        </label>
+        
       </div>
 
       {/* Tabla de turnos por fecha (paginada) */}
@@ -265,9 +289,9 @@ const Metrics = () => {
                   >
                     <td className="px-3 py-2">{shift.U_custmrName}</td>
                     <td className="px-3 py-2">{shift.U_Telephone}</td>
-                    <td className="px-3 py-2">{shift.U_descrption}</td>
-                    <td className="px-3 py-2 text-blue-600">{shift.U_problemTyp}</td>
-                    <td className="px-3 py-2">{shift.U_Chasis}</td>
+                    <td className="px-3 py-2">{shift.U_dni}</td>
+                    <td className="px-3 py-2 text-blue-600">{getProblemLabel(shift.U_problemTyp, shift.U_ProSubType)}</td>
+                    
                     <td className="px-3 py-2">{formatDate(shift.U_Fecha)}</td>
                     <td className="px-3 py-2">{shift.U_StartTime}</td>
                     <td className="px-3 py-2">
@@ -328,9 +352,9 @@ const months = [
 const headers = [
   "Nombre",
   "N° Contacto",
-  "Descripción",
+  "Documento",
   "Motivo",
-  "Chasis",
+  
   "Fecha",
   "H.Inicio",
   "Estado",
