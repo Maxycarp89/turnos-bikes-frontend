@@ -29,7 +29,7 @@ const BookingForm = () => {
     U_BPLName: "",
     U_problemTyp: services[0] || "",
     U_State: "Pendiente",
-    U_ProSubType: "", 
+    U_ProSubType: "",
   };
 
   const {
@@ -352,6 +352,25 @@ const BookingForm = () => {
             />
           </div>
         </label>
+          <label className="block">
+            <span className="text-sm text-gray-700">Código Postal</span>
+            <input
+              type="text"
+              className="mt-1 block w-full p-2 border rounded"
+              placeholder="Ej: 12345"
+              {...register("ZipCode", {
+                required: "El código postal es obligatorio",
+                pattern: {
+                  value: /^\d{4}$/,
+                  message: "Ingrese un código postal válido (4 dígitos)",
+                },
+              })}
+            />
+            {errors.ZipCode && (
+              <span className="text-sm text-red-500">{errors.ZipCode.message}</span>
+            )}
+          </label>
+
         <label className="block">
           <span className="text-sm text-gray-700">Seleccionar sucursal</span>
           <select
