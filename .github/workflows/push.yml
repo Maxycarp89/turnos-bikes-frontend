@@ -36,4 +36,4 @@ jobs:
           REMOTE_HOST: ${{ secrets.PRD_HOST }}
           REMOTE_PATH: ${{ secrets.PRD_PATH }}
         run: |
-          rsync -avz --exclude-from='.transferignore' --delete -e "ssh -p 8008" ./dist/ $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH || { echo "rsync failed with exit code $?"; exit 1; }
+          rsync -avz --exclude-from='.transferignore' --delete -e "ssh " ./dist/ $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH || { echo "rsync failed with exit code $?"; exit 1; }
