@@ -48,21 +48,21 @@ const Dashboard = () => {
     navigate("/login");
   };
 
-  useEffect(() => { (async () => await relogin())() }, []);
-
+  
   const relogin = async () => {
-      try {
-          const { data } = await clientAxios.post("/loginAgain", { UserName: cookies.user })
-          for (const cookie of data['set-cookie']) {
-              const cookieName = cookie.split("=")[0].replace(' ', '');
-              const cookieValue = cookie.split("=")[1].split(";")[0];
-              setCookie(cookieName, cookieValue, { path: "" });
-          }
-      } catch (error) {
-       console.error(error);
+    try {
+      const { data } = await clientAxios.post("/loginAgain", { UserName: cookies.user })
+      for (const cookie of data['set-cookie']) {
+        const cookieName = cookie.split("=")[0].replace(' ', '');
+        const cookieValue = cookie.split("=")[1].split(";")[0];
+        setCookie(cookieName, cookieValue, { path: "" });
       }
+    } catch (error) {
+      console.error(error);
+    }
   }
-
+  
+  useEffect(() => { setTimeout(() => relogin(), 100000); }, []);
 
   return (
     <div className="flex h-screen bg-gray-100">

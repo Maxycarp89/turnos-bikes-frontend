@@ -7,7 +7,7 @@ const coreRoutes = [
         path: '/turnos/*',
         title: 'Turnos',
         component: Dashboard,
-        roles: ['Postventa'],
+        roles: ['Bikes'],
         positions: ['Cajero', 'Vendedor', 'Referente', 'IT']
     },{
         path: '/',

@@ -129,7 +129,7 @@ const Metrics = () => {
         s.DocEntry === shift.DocEntry ? { ...s, U_State: newState } : s
       );
 
-      // Mantener datos y mes/año actuales del store
+      // Mantener datos y mes/año actuales del store, NO cambiar la página actual
       setStoreTurnos({
         data: shifts,
         month: monthSelected,
@@ -145,13 +145,20 @@ const Metrics = () => {
     }
   };
 
-  // Agrupar por fecha para paginar
+  // Agrupar por fecha para paginar y mostrar primero el día de hoy si existe
   useEffect(() => {
     if (Array.isArray(existShifts) && existShifts.length > 0) {
       const dates = [...new Set(existShifts.map((s) => s.U_Fecha))].sort();
       setUniqueDates(dates);
-      // Reset a primera página si cambian los datos
-      setCurrentPage(1);
+      // Buscar si existe el día de hoy en las fechas
+      const today = new Date();
+      const todayISO = today.toISOString().slice(0, 10); // yyyy-mm-dd
+      const todayIndex = dates.findIndex((d) => d === todayISO);
+      if (todayIndex !== -1) {
+        setCurrentPage(todayIndex + 1); // Páginas son 1-indexadas
+      } else {
+        setCurrentPage(1);
+      }
     } else {
       setUniqueDates([]);
       setCurrentPage(1);

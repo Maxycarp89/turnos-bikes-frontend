@@ -223,7 +223,10 @@ const BookingForm = () => {
       });
     } catch (err) {
       console.error("Error creating booking:", err);
-      toast.error("Error al crear la reserva. Intente nuevamente.");
+      toast.error(err.response.data.error || "Error al crear la reserva. Intente nuevamente.",{
+        position: "top-center",
+
+      });
     } finally {
       setSending(false);
     }

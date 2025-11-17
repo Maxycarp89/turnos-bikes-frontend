@@ -71,14 +71,25 @@ function TableShifts() {
     toast.success(bodyStringified[0].DocEntry ? "Calendario editado exitosamente." : "Calendario generado exitosamente.");
   };
 
-  function formatDate(dateString) {
-    const [year, month, day] = dateString.split("-");
-    const date = new Date(year, month - 1, day);
-    const dayName = new Intl.DateTimeFormat("es-ES", {
-      weekday: "long",
-    }).format(date);
-    return `${dayName.charAt(0).toUpperCase() + dayName.slice(1)} ${day}/${month}/${year}`;
+function formatDate(dateString) {
+  // Asegurar compatibilidad con ISO evitando la parte hora
+  const cleanDate = dateString.split("T")[0];
+
+  const [year, month, day] = cleanDate.split("-");
+  const date = new Date(year, month - 1, day);
+
+  if (isNaN(date)) {
+    console.error("Fecha inválida:", dateString);
+    return "";
   }
+
+  const dayName = new Intl.DateTimeFormat("es-ES", {
+    weekday: "long",
+  }).format(date);
+
+  return `${dayName.charAt(0).toUpperCase() + dayName.slice(1)} ${day}/${month}/${year}`;
+}
+
 
   return (
     <>
@@ -101,14 +112,14 @@ function TableShifts() {
                   <tr key={rowIndex} className="align-top border-b">
                     <td className="p-4 bg-blue-600 text-white rounded-l w-60">{formatDate(head.U_Fecha)}</td>
                     {head.U_HorarioRecep.map((hour, index) => (
-                      <td key={`${rowIndex}-${index}`} className={`p-3 border-l ${hour.ocupado > 0 ? 'bg-red-600 text-white' : ''}`}>
+                      <td key={`${rowIndex}-${index}`} className={`p-3 border-l ${hour.ocupado > 0 ? 'bg-red-600 text-gray-100' : ''}`}>
                         <div className="bg-blue-600 text-white px-2 py-1 rounded inline-block mb-2">{hour.hs}</div>
                         <div className="text-sm mb-2">{hour.ocupado} de</div>
                         <input
                           type="number"
                           value={hour.cantrecep}
                           onChange={(event) => handleChange(event, head, hour)}
-                          className="w-20 border rounded px-2 py-1"
+                          className="w-20 border rounded px-2 py-1 text-black"
                         />
                       </td>
                     ))}
