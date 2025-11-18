@@ -13,7 +13,6 @@ export const getDatesOfMonth = (year, month, sucursal) => {
             U_CantServComplejo: 0,
             U_BPLId: sucursal,
             U_HorarioRecep: [
-                { hs: '08:00', cantrecep: 0, ocupado: 0, habilitad: 'N' },
                 { hs: '08:30', cantrecep: 0, ocupado: 0, habilitad: 'N' },
                 { hs: '09:00', cantrecep: 0, ocupado: 0, habilitad: 'N' },
                 { hs: '09:30', cantrecep: 0, ocupado: 0, habilitad: 'N' },
@@ -24,13 +23,14 @@ export const getDatesOfMonth = (year, month, sucursal) => {
                 { hs: '12:00', cantrecep: 0, ocupado: 0, habilitad: 'N' },
                 { hs: '12:30', cantrecep: 0, ocupado: 0, habilitad: 'N' },
                 { hs: '13:00', cantrecep: 0, ocupado: 0, habilitad: 'N' },
-                { hs: '13:30', cantrecep: 0, ocupado: 0, habilitad: 'N' },
-                { hs: '14:00', cantrecep: 0, ocupado: 0, habilitad: 'N' },
-                { hs: '14:30', cantrecep: 0, ocupado: 0, habilitad: 'N' },
-                { hs: '15:00', cantrecep: 0, ocupado: 0, habilitad: 'N' },
-                { hs: '15:30', cantrecep: 0, ocupado: 0, habilitad: 'N' },
-                { hs: '16:00', cantrecep: 0, ocupado: 0, habilitad: 'N' },
-                { hs: '16:30', cantrecep: 0, ocupado: 0, habilitad: 'N' }
+                { hs: '17:00', cantrecep: 0, ocupado: 0, habilitad: 'N' },
+                { hs: '17:30', cantrecep: 0, ocupado: 0, habilitad: 'N' },
+                { hs: '18:00', cantrecep: 0, ocupado: 0, habilitad: 'N' },
+                { hs: '18:30', cantrecep: 0, ocupado: 0, habilitad: 'N' },
+                { hs: '19:00', cantrecep: 0, ocupado: 0, habilitad: 'N' },
+                { hs: '19:30', cantrecep: 0, ocupado: 0, habilitad: 'N' },
+                { hs: '20:00', cantrecep: 0, ocupado: 0, habilitad: 'N' }
+                
             ]
         }
     })
